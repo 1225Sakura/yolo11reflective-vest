@@ -40,7 +40,12 @@
       "Bash(pip3 list:*)",
       "Bash(conda env list:*)",
       "Bash(source /home/user/anaconda3/bin/activate:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git remote:*)"
     ]
   }
 }

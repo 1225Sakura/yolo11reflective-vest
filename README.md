@@ -160,16 +160,25 @@ class_id center_x center_y width height
 
 ## 模型性能
 
-使用 YOLO11m 在 vest_merged 数据集上训练的性能:
+使用 YOLO11m 在 vest_merged 数据集上训练100轮的性能:
 
 | 指标 | 数值 |
 |------|------|
-| mAP@0.5 | - |
-| Precision | - |
-| Recall | - |
-| 推理速度 | - ms/张 |
+| **Precision** | **97.48%** |
+| **Recall** | **96.91%** |
+| **mAP@0.5** | **98.95%** |
+| **mAP@0.5-0.95** | **90.04%** |
+| 训练轮数 | 100 epochs |
+| 模型大小 | 110MB |
 
-(请在训练完成后填写实际性能指标)
+### 训练曲线和结果可视化
+
+训练过程的详细可视化结果（包含在百度网盘下载包中）:
+- **训练曲线** (`results.png`) - 展示loss、精度、召回率等指标随训练进程的变化
+- **混淆矩阵** (`confusion_matrix.png`) - 展示模型分类效果
+- **PR曲线** (`BoxPR_curve.png`) - Precision-Recall曲线
+- **F1曲线** (`BoxF1_curve.png`) - F1分数变化
+- **样本可视化** - 训练和验证样本的标注与预测对比
 
 ## 训练配置
 

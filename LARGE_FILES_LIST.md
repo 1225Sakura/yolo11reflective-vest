@@ -16,7 +16,23 @@
 
 #### 2. 最佳训练模型 (110MB)
 **文件**: `reflective_vest_detection/yolo_runs/yolo11x_vest_final/train/weights/best.pt`
-**说明**: 训练100轮后的最佳模型
+**说明**: 训练100轮后的最佳模型 (mAP@0.5: 98.95%)
+
+#### 3. 训练结果和可视化 (约3MB)
+**目录**: `reflective_vest_detection/yolo_runs/yolo11x_vest_final/train/`
+**包含文件**:
+- `results.png` - 训练曲线图
+- `confusion_matrix.png` - 混淆矩阵
+- `confusion_matrix_normalized.png` - 归一化混淆矩阵
+- `BoxF1_curve.png` - F1分数曲线
+- `BoxP_curve.png` - Precision曲线
+- `BoxPR_curve.png` - PR曲线
+- `BoxR_curve.png` - Recall曲线
+- `labels.jpg` - 标签分布
+- `train_batch*.jpg` - 训练样本可视化
+- `val_batch*_labels.jpg` - 验证集标签
+- `val_batch*_pred.jpg` - 验证集预测结果
+- `results.csv` - 详细训练数据
 
 ---
 
@@ -43,6 +59,19 @@ reflective-vest-detection/
 ├── models/
 │   ├── best.pt                    # 110MB 最佳训练模型 ⭐
 │   └── last.pt                    # 110MB 最后checkpoint (可选)
+├── training_results/              # 训练结果可视化
+│   ├── results.png                # 训练曲线
+│   ├── confusion_matrix.png       # 混淆矩阵
+│   ├── confusion_matrix_normalized.png
+│   ├── BoxF1_curve.png            # F1曲线
+│   ├── BoxP_curve.png             # Precision曲线
+│   ├── BoxPR_curve.png            # PR曲线
+│   ├── BoxR_curve.png             # Recall曲线
+│   ├── labels.jpg                 # 标签分布
+│   ├── train_batch0.jpg           # 训练样本示例
+│   ├── val_batch0_labels.jpg      # 验证集标签
+│   ├── val_batch0_pred.jpg        # 验证集预测
+│   └── results.csv                # 详细训练数据
 └── 下载说明.txt
 ```
 
@@ -125,20 +154,30 @@ reflective-vest-detection/
 如果要将文件复制到统一目录准备上传:
 
 ```bash
-# 创建上传目录
+# 创建上传目录结构
 mkdir upload_to_baidu
+mkdir upload_to_baidu\dataset
+mkdir upload_to_baidu\models
+mkdir upload_to_baidu\training_results
 
 # 复制数据集
-copy reflective_vest_detection\data\fgy.rar upload_to_baidu\
-
-# 创建models子目录
-mkdir upload_to_baidu\models
+copy reflective_vest_detection\data\fgy.rar upload_to_baidu\dataset\
 
 # 复制最佳模型
 copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\weights\best.pt upload_to_baidu\models\
 
 # (可选) 复制last.pt
 copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\weights\last.pt upload_to_baidu\models\
+
+# 复制训练结果可视化
+copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\results.png upload_to_baidu\training_results\
+copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\confusion_matrix.png upload_to_baidu\training_results\
+copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\confusion_matrix_normalized.png upload_to_baidu\training_results\
+copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\Box*.png upload_to_baidu\training_results\
+copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\labels.jpg upload_to_baidu\training_results\
+copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\train_batch0.jpg upload_to_baidu\training_results\
+copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\val_batch0_*.jpg upload_to_baidu\training_results\
+copy reflective_vest_detection\yolo_runs\yolo11x_vest_final\train\results.csv upload_to_baidu\training_results\
 ```
 
 然后将 `upload_to_baidu` 目录上传到百度网盘即可。
