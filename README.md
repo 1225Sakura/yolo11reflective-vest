@@ -36,9 +36,9 @@ pip install -r requirements.txt
 
 ### 下载数据集和模型
 
-**百度网盘下载链接**: `[请在此处添加你的百度网盘分享链接]`
+**百度网盘下载链接**: https://pan.baidu.com/s/5JiTmn3N_nYOVsue5l19Xjw
 
-**提取码**: `xxxx`
+**提取码**: (百度网盘超级会员v3分享)
 
 下载后文件放置:
 ```
@@ -102,7 +102,7 @@ python two_stage_detection_fixed.py
 输出结果:
 - 绿色框: 穿戴反光衣的人员
 - 红色框: 未穿戴反光衣的人员
-- 黄色框: 检测到的反光衣
+- 蓝色框: 检测到的反光衣
 
 ## 项目结构
 
@@ -199,11 +199,9 @@ Precision-Recall曲线和F1分数曲线：
 ![Label Distribution](assets/training_results/labels.jpg)
 
 #### 验证集预测结果示例
-模型在验证集上的实际检测效果（黄色框标注反光衣）：
+模型在验证集上的实际检测效果（蓝色框标注反光衣）：
 
 ![Validation Predictions](assets/training_results/val_batch0_pred.jpg)
-
-> 💡 **提示**: 更多训练结果和可视化图片请从百度网盘下载完整的 `training_results/` 文件夹。
 
 ## 训练配置
 
