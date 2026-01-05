@@ -1,0 +1,113 @@
+# 反光衣目标检测 - 最终优化配置
+# 目标: mAP@0.5 ≥ 85%
+# 基于完整诊断和数据分析
+
+project:
+  name: "reflective_vest_detection_final"
+  task: "object_detection"
+  description: "最终优化版 - 目标mAP@0.5>=85%"
+
+dataset:
+  name: "vest_merged"
+  root: "/home/user/fgy/data/vest_merged"
+  train_images: "/home/user/fgy/data/vest_merged/images/train"
+  train_labels: "/home/user/fgy/data/vest_merged/labels/train"
+  val_images: "/home/user/fgy/data/vest_merged/images/val"
+  val_labels: "/home/user/fgy/data/vest_merged/labels/val"
+  num_classes: 1
+  class_names: ["reflective_vest"]
+  filter_empty_labels: false
+
+# 增强数据增强策略
+augmentation:
+  train:
+    resize: [640, 640]
+    random_flip: true
+    random_crop: true  # 新增！减少过拟合
+    color_jitter: true
+    normalize: true
+    normalize_mean: [0.485, 0.456, 0.406]
+    normalize_std: [0.229, 0.224, 0.225]
+  val:
+    resize: [640, 640]
+    normalize: true
+    normalize_mean: [0.485, 0.456, 0.406]
+    normalize_std: [0.229, 0.224, 0.225]
+
+# 模型配置 - 关键调整
+model:
+  backbone: "dinov3_vitb16"
+  pretrained_path: "models/pretrained/dinov3_vitb16_pretrain_lvd1689m-73cec8be.pth"
+  freeze_backbone: true  # 关键！冻结backbone，只训练head
+  detection_head:
+    type: "detr"
+    num_queries: 20  # 合适，匹配数据集
+    hidden_dim: 256
+    num_heads: 8
+    num_encoder_layers: 6
+    num_decoder_layers: 6
+    dropout: 0.2  # 提高dropout，从0.1到0.2，防止过拟合
+
+# 训练配置 - 针对性优化
+training:
+  batch_size: 64  # 保持不变，充分利用GPU
+  num_epochs: 120  # 适当增加
+  num_workers: 8
+  device: "cuda"
+  mixed_precision: true
+  gradient_clip: 1.0
+
+  # 优化器配置
+  optimizer:
+    type: "adamw"
+    lr: 0.001  # 关键！大幅提高学习率，因为只训练head
+    weight_decay: 0.0001
+    betas: [0.9, 0.999]
+
+  # 学习率调度
+  lr_scheduler:
+    type: "cosine"
+    warmup_epochs: 10
+    min_lr: 0.00005
+
+  # 损失函数权重 - 最关键的修复！
+  loss_weights:
+    classification: 8.0  # 大幅提高！从2.0到8.0
+    bbox_l1: 2.0         # 降低！从5.0到2.0
+    bbox_giou: 1.0       # 降低！从2.0到1.0
+    eos_coef: 0.1        # 关键修复！从0.02改回0.1
+
+  # 保存配置
+  save_dir: "models/checkpoints_final"
+  log_dir: "logs_final"
+  save_interval: 5
+  eval_interval: 1  # 每个epoch都评估
+  resume: null
+
+# 评估配置
+evaluation:
+  iou_threshold: 0.5
+  confidence_threshold: 0.01  # 降低阈值观察更多预测
+  nms_threshold: 0.5
+  metrics: ["mAP", "precision", "recall", "f1"]
+
+# 可视化
+visualization:
+  save_dir: "results/visualizations_final"
+  num_samples: 50  # 增加可视化样本
+  bbox_thickness: 2
+  font_scale: 0.5
+  colors:
+    - [255, 0, 0]
+    - [0, 255, 0]
+
+# 推理配置
+inference:
+  confidence_threshold: 0.3
+  nms_threshold: 0.5
+  batch_size: 1
+  save_predictions: true
+  save_visualizations: true
+  output_dir: "results/predictions_final"
+
+seed: 42
