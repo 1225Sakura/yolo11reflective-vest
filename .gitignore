@@ -68,7 +68,6 @@ wandb/
 tensorboard/
 
 # Results - 结果文件不上传
-results/
 outputs/
 predictions/
 visualizations/
@@ -97,3 +96,6 @@ model_info.json
 
 # Keep structure files
 !.gitkeep
+# Allow assets directory
+\!assets/
+\!assets/**

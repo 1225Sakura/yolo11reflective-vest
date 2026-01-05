@@ -102,7 +102,7 @@ python two_stage_detection_fixed.py
 输出结果:
 - 绿色框: 穿戴反光衣的人员
 - 红色框: 未穿戴反光衣的人员
-- 蓝色框: 检测到的反光衣
+- 黄色框: 检测到的反光衣
 
 ## 项目结构
 
@@ -173,12 +173,37 @@ class_id center_x center_y width height
 
 ### 训练曲线和结果可视化
 
-训练过程的详细可视化结果（包含在百度网盘下载包中）:
-- **训练曲线** (`results.png`) - 展示loss、精度、召回率等指标随训练进程的变化
-- **混淆矩阵** (`confusion_matrix.png`) - 展示模型分类效果
-- **PR曲线** (`BoxPR_curve.png`) - Precision-Recall曲线
-- **F1曲线** (`BoxF1_curve.png`) - F1分数变化
-- **样本可视化** - 训练和验证样本的标注与预测对比
+#### 训练过程曲线
+训练100轮的完整训练过程，展示loss、精度、召回率、mAP等指标的变化：
+
+![Training Results](assets/training_results/results.png)
+
+#### 混淆矩阵
+模型在验证集上的分类效果，展示反光衣检测的准确性：
+
+![Confusion Matrix](assets/training_results/confusion_matrix.png)
+
+#### PR曲线和F1曲线
+Precision-Recall曲线和F1分数曲线：
+
+<table>
+<tr>
+<td><img src="assets/training_results/BoxPR_curve.png" alt="PR Curve" width="400"/></td>
+<td><img src="assets/training_results/BoxF1_curve.png" alt="F1 Curve" width="400"/></td>
+</tr>
+</table>
+
+#### 标签分布
+数据集中反光衣标注的分布情况：
+
+![Label Distribution](assets/training_results/labels.jpg)
+
+#### 验证集预测结果示例
+模型在验证集上的实际检测效果（黄色框标注反光衣）：
+
+![Validation Predictions](assets/training_results/val_batch0_pred.jpg)
+
+> 💡 **提示**: 更多训练结果和可视化图片请从百度网盘下载完整的 `training_results/` 文件夹。
 
 ## 训练配置
 
